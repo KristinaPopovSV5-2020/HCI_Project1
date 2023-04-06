@@ -5,11 +5,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './infrastructure/material.module';
 import { WeatherHomeComponent } from './components/weather-home/weather-home.component';
+import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    WeatherHomeComponent
+    WeatherHomeComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
