@@ -19,6 +19,10 @@ nav {
     font-size: 24px;
 }
 
+.large-text {
+    font-size: 18px;
+}
+
 hr {
     margin-top: 0;
     border: none;
@@ -45,6 +49,10 @@ hr {
     color: lightslategrey;
 }
 
+.sup-celsius {
+    font-size: 38px;
+}
+
 .search-group {
     align-items: center;
     background-color: #fff;
@@ -56,29 +64,36 @@ hr {
 .centered-div {
     background-color: white;
     border-radius: 10px;
-    width: 50%;
+    width: 70%;
     height: 300px;
     margin: auto;
     display: flex;
-    justify-content: center;
     align-items: center;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-
 }
 
-.row {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.icon {
-  margin-right: 10px;
+.right-div {
+    margin-left: 100px;
+    width: 400px;
 }
 
 .text {
-  font-size: 16px;
+  font-size: 18px;
 }
+
+.margin-right {
+    margin-right: 1rem;
+}
+
+
+.bold-icon {
+    font-weight: bold;
+}
+
+.text {
+    font-size: 16px;
+}
+
 
 
 /* fokus za search */
@@ -103,3 +118,108 @@ hr {
     box-shadow: none;
     border-color: transparent;
   }
+.less-bold{
+  font-weight: 500
+}
+
+.cardC{
+    padding: 1.2rem 3rem 1rem 3rem;
+    margin: 1rem;
+    border-radius: 10px;
+    border-color: rgba(238, 237, 237, 0.438);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    width: 70%;
+    height: 300px;
+    margin: auto;
+    display: flex;
+    background-color: white;
+}
+  
+.img-fluid{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    padding: 0 0;
+}
+.row2 .img-fluid{
+    margin: 10% 0;
+    opacity: 0.5;
+    width: 40%;
+    text-align: center;
+}
+
+
+@media(max-width:400px)
+{
+    .row4{
+        font-size: 0.7rem;
+        font-weight: bold;
+        color: black;
+    }
+}
+@media(max-width:320px)
+{
+    .row4{
+        font-size: 0.6rem;
+        font-weight: bold;
+        color: black;
+    }
+}
+.row2{
+    font-size: 0.7rem;
+    color: rgb(196, 196, 196);
+    margin: 5% 0 5px;
+    justify-content: center;
+}
+
+
+.row1{
+    font-size: 1.0rem;
+    color:black;
+    margin: 5% 0 3px;
+    justify-content: center;
+}
+
+.row4{
+    font-size: 1.0rem;
+    color:black;
+    font-size: x-large;
+    margin: 5% 0 3px;
+    justify-content: center;
+
+
+}
+
+.row3{
+    justify-content: center;
+}
+.card-3 .row3{
+    margin: 5% 0 2.5rem;
+}
+
+.slide {
+    width: 100%;
+}
+.carousel-indicators li {
+    width: 8px;
+    height: 10px;
+    border-radius: 100%;
+    opacity: 0.2;
+    background-color: #000000;
+    margin-top: 200px;
+}
+.carousel-indicators{
+    margin-bottom: 0px;
+}
+
+@media(max-width:767px){
+    .cardC{
+        height: 10rem;
+        padding: 1.5rem 1.5rem 1rem 1.5rem;
+    }
+}
+
+.active{
+    margin-left: 3px;
+    margin-right: 3px;
+}

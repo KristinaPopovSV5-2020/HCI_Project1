@@ -62,8 +62,7 @@ export class WeatherHomeComponent implements OnInit{
     
   }
 
- 
-
+elements = Array.from({length: 10}, (_, i) => i + 1);
   selectCity(prediction: { description: string, place_id: string }) {
     this.searchInput = prediction.description;
     this.predictions = [];
