@@ -17,7 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     AppRoutingModule,
     MaterialModule,
-    NgbModule
+    NgbModule,
     HttpClientModule
   ],
   providers: [],
