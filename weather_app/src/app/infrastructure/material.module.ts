@@ -20,6 +20,9 @@ import {MatListModule} from '@angular/material/list';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatRadioModule} from '@angular/material/radio';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatMenuModule} from '@angular/material/menu';
 
 
 @NgModule({
@@ -47,6 +50,9 @@ import {MatRadioModule} from '@angular/material/radio';
     MatRadioModule,
     ReactiveFormsModule,   
     FormsModule, 
+    MatAutocompleteModule,
+    BrowserAnimationsModule,
+    MatMenuModule
   ],
   exports:[
     CommonModule,
@@ -72,7 +78,9 @@ import {MatRadioModule} from '@angular/material/radio';
     MatRadioModule,
     ReactiveFormsModule,
     FormsModule,
-    
+    MatAutocompleteModule,
+    BrowserAnimationsModule,
+    MatMenuModule
   ]
 
 })

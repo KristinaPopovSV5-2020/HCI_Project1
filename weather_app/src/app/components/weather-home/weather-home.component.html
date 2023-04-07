@@ -13,18 +13,32 @@
           <form class="form-inline ml-auto">
             <div class="input-group search-group">
                 <mat-icon class="blue">search</mat-icon>
-              <input class="form-control mr-sm-2 border-0" type="search" placeholder="Search location" aria-label="Search">
+                <input #myInput name="input" class="form-control mr-sm-2 border-0" type="text" placeholder="Search location"
+                [(ngModel)]="searchInput"
+                (input)="autocomplete()"
+                autocomplete="off">
+                <div class="input-group-append">
+                    <div #myDropdownMenu class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <mat-option class="dropdown-item" *ngFor="let prediction of predictions" (click)="selectCity(prediction)">{{ prediction.description }}
+                        </mat-option>
+                    </div>
+                  </div>
               <span class="input-group-text border-0" id="search-addon">
                 <span class="material-symbols-outlined softgrey">
                     near_me
                     </span>
             </span>
+            
+                
             </div>
-          </form>
+        </form>
+          
         </div>
       </nav>
   </nav>
   <hr>
+
+  <p>{{city}}</p>
   
 <div class="centered-div">
     <div class="float-left">

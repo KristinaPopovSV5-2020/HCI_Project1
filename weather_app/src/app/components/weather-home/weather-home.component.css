@@ -103,6 +103,21 @@ hr {
     -webkit-box-shadow: none;
 }
 
+.input-group-append {
+    position: relative;
+    border-color: transparent;
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    top: calc(100% + 14px);
+    left: -14em;
+    right: 0;
+    z-index: 9999;
+    border-radius: 0;
+    box-shadow: none;
+    border-color: transparent;
+  }
 .less-bold{
   font-weight: 500
 }
