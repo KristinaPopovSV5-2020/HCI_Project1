@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { WeatherService } from '../weather.service';
 
 declare var google: any;
 
@@ -11,6 +12,7 @@ export class WeatherHomeComponent implements OnInit{
   autocompleteService = new google.maps.places.AutocompleteService();
   searchInput: string = '';
   predictions: { description: string, place_id: string }[] = [];
+  elements = Array.from({ length: 10 }, (_, index) => index + 1);
 
   @ViewChild('myDropdownMenu', { static: false })
   dropdownMenuRef!: ElementRef;
@@ -18,6 +20,23 @@ export class WeatherHomeComponent implements OnInit{
   inputRef!: ElementRef;
 
   city!: string;
+
+  result:any;
+
+  weatherService:WeatherService;
+  currentWeather: Weather={
+    city: '',
+    image: '',
+    sky: '',
+    max_temp: 0,
+    min_temp: 0,
+    feels: 0,
+    humidity: 0,
+    pressure: 0,
+    moon: '', current_temp:0
+  }
+
+  constructor(weatherService:WeatherService){this.weatherService=weatherService}
 
   ngOnInit() {
     if (navigator.geolocation) {
@@ -33,17 +52,52 @@ export class WeatherHomeComponent implements OnInit{
             console.log(data);
             const cityResult = data.results.find((result: { types: string | string[]; }) => result.types.includes('locality'));
             this.city = cityResult.address_components[0].long_name;
+            this.weatherService.getWeatherCurrentData(this.city).subscribe((res) =>{
+              console.log(res)
+              this.currentWeather = {
+                city: this.city,
+                image: res.forecast.forecastday[0].day.condition.icon,
+                sky: res.forecast.forecastday[0].day.condition.text,
+                max_temp: res.forecast.forecastday[0].day.maxtemp_c,
+                min_temp: res.forecast.forecastday[0].day.mintemp_c,
+                feels: res.current.feelslike_c,
+                humidity: res.current.humidity,
+                pressure: res.current.pressure_mb,
+                moon: res.forecast.forecastday[0].astro.moon_phase,
+                current_temp:res.current.temp_c
+              }
+        
+             })
           })
           .catch(error => console.error(error));
       });
     }
+    
   }
 
+  load_current(){
+    this.weatherService.getWeatherCurrentData(this.city).subscribe((res) =>{
+      //console.log(res)
+      this.currentWeather = {
+        city: this.city,
+        image: res.forecast.forecastday[0].day.condition.icon,
+        sky: res.forecast.forecastday[0].day.condition.text,
+        max_temp: res.forecast.forecastday[0].day.maxtemp_c,
+        min_temp: res.forecast.forecastday[0].day.mintemp_c,
+        feels: res.current.feelslike_c,
+        humidity: res.current.humidity,
+        pressure: res.current.pressure_mb,
+        moon: res.forecast.forecastday[0].astro.moon_phase,
+        current_temp:res.current.temp_c
+      }
+
+     })
+
+  }
 
   autocomplete() {
     if (this.searchInput.length > 0) {
       this.dropdownMenuRef.nativeElement.classList.add('show');
-      console.log("aaa")
       this.autocompleteService.getPlacePredictions({ input: this.searchInput },
         (predictions: any[], status: string) => {
           if (status === google.maps.places.PlacesServiceStatus.OK) {
@@ -51,21 +105,33 @@ export class WeatherHomeComponent implements OnInit{
               return { description: prediction.description, place_id: prediction.place_id };
             });
           } else {
-            console.log("bbb")
             this.predictions = [];
           }
         });
     } else {
-      console.log("ccc")
       this.predictions = [];
     }
     
   }
 
-elements = Array.from({length: 10}, (_, i) => i + 1);
   selectCity(prediction: { description: string, place_id: string }) {
     this.searchInput = prediction.description;
     this.predictions = [];
-    // do something with the selected city, e.g. navigate to a new page
+    this.city=this.searchInput;
+    this.load_current();
   }
 }
+export interface Weather{
+  city: string,
+  image: string,
+  sky: string,
+  max_temp: number,
+  min_temp: number,
+  feels: number, 
+  humidity: number,
+  pressure: number
+  moon: string,
+  current_temp:number
+
+}
+
