@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { MaterialModule } from './infrastructure/material.module';
 import { WeatherHomeComponent } from './components/weather-home/weather-home.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AppRoutingModule,
     MaterialModule,
     NgbModule
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent, WeatherHomeComponent],

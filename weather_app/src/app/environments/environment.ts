@@ -6,6 +6,8 @@ export const environment = {
     production: false,
     //apiHost: 'http://192.168.0.19:8080/',
     apiHost: 'http://localhost:8080/',
+    apiKey: '81a61c80b4d04b7b871205521230604',
+    apiBaseUrl: 'http://api.weatherapi.com/v1/'
   
   };
   
