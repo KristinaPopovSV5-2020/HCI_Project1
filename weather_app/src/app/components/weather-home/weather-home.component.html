@@ -13,14 +13,26 @@
           <form class="form-inline ml-auto">
             <div class="input-group search-group">
                 <mat-icon class="blue">search</mat-icon>
-              <input class="form-control mr-sm-2 border-0" type="search" placeholder="Search location" aria-label="Search">
+                <input #myInput name="input" class="form-control mr-sm-2 border-0" type="text" placeholder="Search location"
+                [(ngModel)]="searchInput"
+                (input)="autocomplete()"
+                autocomplete="off">
+                <div class="input-group-append">
+                    <div #myDropdownMenu class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <mat-option class="dropdown-item" *ngFor="let prediction of predictions" (click)="selectCity(prediction)">{{ prediction.description }}
+                        </mat-option>
+                    </div>
+                  </div>
               <span class="input-group-text border-0" id="search-addon">
                 <span class="material-symbols-outlined softgrey">
                     near_me
                     </span>
             </span>
+            
+                
             </div>
-          </form>
+        </form>
+          
         </div>
       </nav>
   </nav>
@@ -28,23 +40,23 @@
   
 <div class="centered-div">
     <div class="float-left">
-        <p class="d-flex text-muted mb-20 justify-content-center">Weather in Novi Sad, Serbia</p> <!--------grad---------->
+        <p class="d-flex text-muted mb-20 justify-content-center">Weather in {{city}}</p> <!--------grad---------->
         <div class="d-flex align-items-center justify-content-between mb-2 pb-2">
             <div>
-                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-weather/ilu3.webp"
-                    width="150px">
+                <img [src]="currentWeather.image"
+                    width="100px" class="">
             </div>
             <div>
-                <h2 class="display-3"><strong>23<sup class="sup-celsius">°C</sup></strong></h2> <!------trenutna------------>
+                <h2 class="display-3"><strong>{{currentWeather.current_temp}}<sup class="sup-celsius">°C</sup></strong></h2> <!------trenutna------------>
             </div>
         </div>
-        <p class="d-flex mb-20 justify-content-center text"><strong>Sunny</strong></p> <!---oblacnost?--------------->
+        <p class="d-flex mb-20 justify-content-center text"><strong>{{currentWeather.sky}}</strong></p> <!---oblacnost?--------------->
         
         <div class="d-flex align-items-center justify-content-center">
             <mat-icon class="bold-icon">north</mat-icon>
-            <div class="text margin-right"> 26°C</div> <!-----max------------->
+            <div class="text margin-right"> {{currentWeather.max_temp}}°C</div> <!-----max------------->
             <mat-icon class="bold-icon">south</mat-icon>
-            <div class="text"> 10°C</div>  <!------min------------>
+            <div class="text"> {{currentWeather.min_temp}}°C</div>  <!------min------------>
         </div>
     </div>
     <div class="float-right right-div">
@@ -60,7 +72,7 @@
                     <span class="info"> Feels like</span>
                   </div>
                   <div class="col-md-5">
-                    <div class="value"> 20°C</div> <!--------subj---------->
+                    <div class="value"> {{currentWeather.feels}}°C</div> <!--------subj---------->
                 </div>
                 </div>
                 <hr>
@@ -74,7 +86,7 @@
                     <span class="info"> Humidity</span>
                   </div>
                   <div class="col-md-5">
-                    <div class="value"> 0%</div>  <!--------vlaznost------------->
+                    <div class="value"> {{currentWeather.humidity}}%</div>  <!--------vlaznost------------->
                 </div>
                 </div>
                 <div class="row align-items-center mt-3">
@@ -87,7 +99,7 @@
                         <div class="info"> Pressure</div>
                     </div>
                     <div class="col-md-5">
-                        <div class="value"> 1016 hPa</div> <!-------pritisak----------->
+                        <div class="value"> {{currentWeather.pressure}} hPa</div> <!-------pritisak----------->
                     </div>
                   </div>
                   <hr>
@@ -101,7 +113,7 @@
                         <div class="info"> Moon phase</div>  
                     </div>
                     <div class="col-md-5">
-                        <div class="value"> Full moon</div> <!-------mesec----------->
+                        <div class="value">{{currentWeather.moon}}</div> <!-------mesec----------->
                     </div>
                   </div>
               </div>
