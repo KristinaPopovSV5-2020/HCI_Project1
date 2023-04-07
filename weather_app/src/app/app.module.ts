@@ -11,7 +11,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   declarations: [
     AppComponent,
     WeatherHomeComponent,
-    SearchComponent
   ],
   imports: [
     BrowserModule,
