@@ -23,6 +23,8 @@ export class WeatherHomeComponent implements OnInit{
 
   result:any;
 
+  alert:boolean;
+
   weatherService:WeatherService;
   currentWeather: Weather={
     city: '',
@@ -41,10 +43,15 @@ export class WeatherHomeComponent implements OnInit{
     wind_kph:'',
     wind_dir:'',
     vis_km:'',
+    us_epa_index: 0,
+    alerts: {
+      event: '',
+      desc: '',
+    }
     
   }
 
-  constructor(weatherService:WeatherService){this.weatherService=weatherService}
+  constructor(weatherService:WeatherService){this.weatherService=weatherService, this.alert = false}
 
   ngOnInit() {
     if (navigator.geolocation) {
@@ -79,10 +86,15 @@ export class WeatherHomeComponent implements OnInit{
                 wind_kph:res.current.wind_kph,
                 wind_dir:res.current.wind_dir,
                 vis_km:res.current.vis_km,
+                us_epa_index:res.current.air_quality['us-epa-index'],
+                alerts:res.alerts.alert[0]
     
               }
+              this.adjustTextColor();
+
         
              })
+
           })
           .catch(error => console.error(error));
       });
@@ -110,9 +122,83 @@ export class WeatherHomeComponent implements OnInit{
         wind_kph:res.current.wind_kph,
         wind_dir:res.current.wind_dir,
         vis_km:res.current.vis_km,
+        us_epa_index:res.current.air_quality['us-epa-index'],
+        alerts:res.alerts.alert[0]
       }
+      this.adjustTextColor();
 
      })
+
+  }
+  adjustTextColor() {
+    const alertWindow = document.getElementById('alertWindow');
+   
+    if (this.currentWeather.alerts.desc != undefined) {
+      this.alert = true;
+      if (alertWindow !=null) {
+        alertWindow.style.display = 'block';
+      }
+    } else {
+      this.alert = false;
+      if (alertWindow !=null) {
+        alertWindow.style.display = 'none';
+      }
+    } 
+    
+    const uvIndexElement = document.getElementById('uvIndex')!;
+
+    if (this.currentWeather.uv >= 1 && this.currentWeather.uv <= 2) {
+      uvIndexElement.style.color = '#95E06C';
+      uvIndexElement.style.fontSize = '1.875rem';
+      uvIndexElement.textContent = 'Low';
+    } else if (this.currentWeather.uv >= 3 && this.currentWeather.uv <= 5) {
+      uvIndexElement.style.color = '#EDB230';
+      uvIndexElement.style.fontSize = '20px';
+      uvIndexElement.textContent = 'Moderate';
+    } else if (this.currentWeather.uv >= 6 && this.currentWeather.uv <= 7) {
+      uvIndexElement.style.color = '#DB5461';
+      uvIndexElement.style.fontSize = '1.875rem';
+      uvIndexElement.textContent = 'High';
+    } else if (this.currentWeather.uv >= 8) {
+      uvIndexElement.style.color = '#DB5461';
+      uvIndexElement.style.fontSize = '20px';
+      uvIndexElement.textContent = 'Very high';
+    }
+
+    const healthConcernElement = document.getElementById('healthConcern')!;
+    const aqiIndexElement = document.getElementById('aqiIndex')!;
+
+    if (this.currentWeather.us_epa_index === 1) {
+      healthConcernElement.style.color = '#95E06C';
+      healthConcernElement.textContent = 'Good';
+      aqiIndexElement.textContent = '0-50';
+    } else if (this.currentWeather.us_epa_index === 2) {
+      healthConcernElement.style.color = '#EDB230';
+      healthConcernElement.style.fontSize = '20px';
+      healthConcernElement.textContent = 'Moderate';
+      aqiIndexElement.textContent = '51-100';
+    } else if (this.currentWeather.us_epa_index === 3) {
+      healthConcernElement.style.color = '#DB5461';
+      healthConcernElement.style.fontSize = '15px';
+      healthConcernElement.textContent = 'Unhealthy for sensitive group';
+      aqiIndexElement.textContent = '101-150';
+    } else if (this.currentWeather.us_epa_index === 4) {
+      healthConcernElement.style.color = '#DB5461';
+      healthConcernElement.style.fontSize = '20px';
+      healthConcernElement.textContent = 'Unhealthy';
+      aqiIndexElement.textContent = '151-200';
+    } else if (this.currentWeather.us_epa_index === 5) {
+      healthConcernElement.style.color = '#DB5461';
+      healthConcernElement.style.fontSize = '20px';
+      healthConcernElement.textContent = 'Very Unhealthy';
+      aqiIndexElement.textContent = '201-300';
+    } else if (this.currentWeather.us_epa_index === 6) {
+      healthConcernElement.style.color = '#DB5461';
+      healthConcernElement.style.fontSize = '20px';
+      healthConcernElement.textContent = 'Hazardous';
+      aqiIndexElement.textContent = '301+';
+    }
+    
 
   }
 
@@ -159,5 +245,11 @@ export interface Weather{
   wind_kph:string,
   wind_dir:string,
   vis_km:string,
+  us_epa_index: number,
+  alerts: Alert,
 }
 
+export interface Alert{
+  event: string,
+  desc: string,
+}

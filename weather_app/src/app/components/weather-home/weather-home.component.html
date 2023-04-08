@@ -41,11 +41,28 @@
             <li class="nav-item">
               <a class="nav-link" href="#hourly">Hourly</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Alerts</a>
+            </li>
           </ul>
           
         </div>
       </nav>
-  
+
+      <div *ngIf="alert==true" id="alertWindow" class="alert alert-warning alert-dismissible fade show">
+        <div class="alert-content align-items-center" >
+          <div class="alert-icon">
+            <span class="material-symbols-outlined">
+              warning
+              </span>          
+          </div>
+          <div class="alert-text">
+            <span class="alert-heading">{{currentWeather.alerts.event}}: </span>{{currentWeather.alerts.desc}}
+          </div>
+        </div>
+        <button type="button" class="btn-close" onclick="this.parentElement.style.display='none';"></button>
+      </div>
+      
 <div class="mt-3 centered-div current-div">
     
     <div class="col-md-4 float-left">
@@ -61,7 +78,7 @@
         </div>
         <p class="d-flex mb-20 justify-content-center text"><strong>{{currentWeather.sky}}</strong></p> <!---oblacnost?--------------->
         
-        <div class=" indian-red d-flex align-items-center justify-content-center">
+        <div class=" indian-red d-flex align-items-center justify-content-center" hidden>
             <mat-icon class="bold-icon">north</mat-icon>
             <div class="text margin-right"> {{currentWeather.max_temp}}°C</div> <!-----max------------->
             
@@ -69,24 +86,12 @@
             <div class="text"> {{currentWeather.min_temp}}°C</div>  <!------min------------>
         </div>
 <br>
-        <div class="d-flex align-items-center justify-content-center">
-            <mat-icon class="bold-icon">accessibility</mat-icon>
-            <div class="text"> {{currentWeather.feels}}°C</div>  <!------feels------------>
 
-            <span class="material-symbols-outlined bold-icon">
-                humidity_mid
-                </span>
-            <div class="text"> {{currentWeather.humidity}}%</div>  <!------humid------------>
-
-            
-            <mat-icon class="bold-icon">compress</mat-icon>
-            <div class="text"> {{currentWeather.pressure}} hPa</div> <!-------pritisak----------->
-        </div>
-
-        <div class="container text14"  hidden>
+        <div class="container container2 d-flex justify-content-center text14" >
+          
             <div class="col-md-12">
-              <div class="row align-items-center no-gutters">
-                <div class="col-md-2">
+              <div class="row align-items-center">
+                <div class="col-md-2 border-0">
                   <mat-icon class="bold-icon">accessibility</mat-icon>
               </div>
                 <div class="col-md-5">
@@ -96,7 +101,23 @@
                   <div class="value"> {{currentWeather.feels}}°C</div> <!--------subj---------->
               </div>
               </div>
+
               <hr>
+                <div class="row align-items-center mt-3">
+                  <div class="col-md-2">
+                    <span class="material-symbols-outlined bold-icon">
+                      humidity_mid
+                      </span>
+                    </div>
+                  <div class="col-md-5">
+                      <div class="info"> Humidity</div>  
+                  </div>
+                  <div class="col-md-5">
+                      <div class="value">{{currentWeather.humidity}}%</div> <!-------mesec----------->
+                  </div>
+                </div>
+
+                <hr>
               <div class="row align-items-center mt-3">
                   <div class="col-md-2">
                     <span class="bold-icon material-symbols-outlined">
@@ -110,97 +131,99 @@
                       <div class="value"> {{currentWeather.pressure}} hPa</div> <!-------pritisak----------->
                   </div>
                 </div>
-                <hr>
-                <div class="row align-items-center mt-3">
-                  <div class="col-md-2">
-                    <span class="bold-icon material-symbols-outlined">
-                        sleep
-                        </span>
-                    </div>
-                  <div class="col-md-5">
-                      <div class="info"> Moon phase</div>  
-                  </div>
-                  <div class="col-md-5">
-                      <div class="value">{{currentWeather.moon}}</div> <!-------mesec----------->
-                  </div>
-                </div>
+                
           </div>
         </div>
     </div>
-    <div class="col-md-8 float-right bg-light2" style="height: 100%;">
-          <div class="container">
+    <div class="col-md-8 float-right bg-light2 d-flex align-items-center justify-content-center" style="height: 100%;">
+          <div>
             <div class="row mt-3 mb-3">
-              <div class="col-4">
-                <div class="card current">
-                  <div class="card-body">
-                    <h5 class="card-title">Humidity</h5>
-                    <h2 class="text-center">{{currentWeather.humidity}}<sup class="percentage">%</sup></h2>
-                  </div>
-                </div>
-              </div>
+
               <div class="col-4">
                 <div class="card current text-left">
-                  <div class="card-body">
+                  <div class="card-body d-flex flex-column justify-content-between">
                     <h5 class="card-title">Wind Status</h5>
-                    <h2 class="text-center">{{currentWeather.wind_kph}}<sub>km/h</sub></h2>
-                    <div class="d-flex align-items-center justify-content-left">
-                        <mat-icon>air</mat-icon>
-                        <div class="text"> {{currentWeather.wind_dir}}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-4">
-                <div class="card current text-left">
-                  <div class="card-body">
-                    <h5 class="card-title">Sunrise & sunset</h5>
-                    <div class="d-flex align-items-center justify-content-left">
-                        <mat-icon class="sun-icon">sunny</mat-icon>
-                        <div class="text"> {{currentWeather.sunrise}}</div>
-                    </div>
-                    <div class="d-flex align-items-center justify-content-left">
-                        <mat-icon class="sun-icon">play_for_work</mat-icon>
-                        <div class="text"> {{currentWeather.sunset}}</div>
+                    <h2 class="bold text-center my-auto">{{currentWeather.wind_kph}}<sub>km/h</sub></h2>
+                    <div class="d-flex align-items-end">
+                      <mat-icon class="small-icon">air</mat-icon>
+                      <div class="text pl-2">{{currentWeather.wind_dir}}</div>
                     </div>
                   </div>
                 </div>
               </div>
 
+              <div class="col-4">
+                <div class="card current">
+                  <div class="card-body d-flex flex-column">
+                    <h5 class="card-title text-left">Visibility</h5>
+                    <h2 class="bold text-center my-auto">{{currentWeather.vis_km}}<sub>km</sub></h2>
+                    <div class="d-flex align-items-end"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-4">
+                <div class="card current text-left">
+                  <div class="card-body d-flex flex-column justify-content-between">
+                    <h5 class="card-title">Sunrise & sunset</h5>
+                    <div class="d-flex align-items-center justify-content-left">
+                        <mat-icon class="sun-icon">sunny</mat-icon>
+                        <div class="bold text">{{currentWeather.sunrise}}</div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-left">
+                        <mat-icon class="sun-icon">play_for_work</mat-icon>
+                        <div class="bold text">{{currentWeather.sunset}}</div>
+                    </div>
+                    <div class="d-flex align-items-end"></div>
+                  </div>
+                </div>
+              </div>
+              </div>
               <div class="row mt-3 mb-3">
               
-              <div class="col-4">
-                <div class="card current text-left">
-                  <div class="card-body">
-                    <h5 class="card-title text-left">UV index</h5>
-                    <h2 class="uv text-center">Low</h2> <!-----uv-->
-                    <div class="d-flex align-items-center justify-content-left">
-                        <mat-icon>brightness_7</mat-icon>
-                        <div class="text"> {{currentWeather.uv}}</div>
+                <div class="col-4">
+                  <div class="card current text-left">
+                    <div class="card-body d-flex flex-column justify-content-between">
+                      <h5 class="card-title">UV index</h5>
+                      <h2 id="uvIndex" class="bold text-center my-auto">Low</h2>
+                      <div class="d-flex align-items-end">
+                        <span class="material-symbols-outlined small-icon">
+                          wb_sunny
+                          </span>
+                        <div class="text pl-2">{{currentWeather.uv}}</div>
+                      </div>
                     </div>
-                   </div>
+                  </div>
                 </div>
-              </div>
+
+                <div class="col-4">
+                  <div class="card current text-left">
+                    <div class="card-body d-flex flex-column justify-content-between">
+                      <h5 class="card-title">Air quality</h5>
+                      <h2 id="healthConcern" class="bold text-center my-auto">Low</h2>
+                      <div class="d-flex align-items-end">
+                        <span class="material-symbols-outlined">
+                          masks
+                          </span>
+                        <div id="aqiIndex" class="text pl-2">{{currentWeather.us_epa_index}}</div> <!-----air quality-->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
               <div class="col-4">
                 <div class="card current text-left">
-                  <div class="card-body">
-                    <h5 class="card-title">Visibility</h5>
-                    <h2 class="text-center">{{currentWeather.vis_km}}km</h2>
+                  <div class="card-body d-flex flex-column justify-content-between">
+                    <h5 class="card-title">Moon phase</h5>
+                    <h4 class="bold text-center my-auto">{{currentWeather.moon}}</h4>
                   </div>
                 </div>
               </div>
-              <div class="col-4">
-                <div class="card current text-left">
-                  <div class="card-body">
-                    <h5 class="card-title">Air quality</h5>
-                    <h2 class="text-center">{{currentWeather.max_temp}}</h2> <!-----air quality-->
-                  </div>
-                </div>
-              </div>
+              
             </div>
             </div>
           </div>
           
-    </div>
       
 </div>
 
@@ -301,9 +324,5 @@
           </div>
         </div>
         </div>
-      
-      
-      
-      
 
 </body>

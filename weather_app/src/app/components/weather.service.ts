@@ -17,7 +17,7 @@ export class WeatherService {
 
 
   getWeatherCurrentData(city: string): Observable<any>{
-    return this.http.get<any>(environment.apiBaseUrl + 'forecast.json?key=' + environment.apiKey + '&q=' + city + '&aqi=no');
+    return this.http.get<any>(environment.apiBaseUrl + 'forecast.json?key=' + environment.apiKey + '&q=' + city + '&aqi=yes&alerts=yes');
   }
 
 
