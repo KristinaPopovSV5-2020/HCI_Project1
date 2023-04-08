@@ -33,7 +33,15 @@ export class WeatherHomeComponent implements OnInit{
     feels: 0,
     humidity: 0,
     pressure: 0,
-    moon: '', current_temp:0
+    moon: '', 
+    current_temp:0,
+    uv: 0,
+    sunrise: '',
+    sunset:'',
+    wind_kph:'',
+    wind_dir:'',
+    vis_km:'',
+    
   }
 
   constructor(weatherService:WeatherService){this.weatherService=weatherService}
@@ -64,7 +72,14 @@ export class WeatherHomeComponent implements OnInit{
                 humidity: res.current.humidity,
                 pressure: res.current.pressure_mb,
                 moon: res.forecast.forecastday[0].astro.moon_phase,
-                current_temp:res.current.temp_c
+                current_temp:res.current.temp_c,
+                uv:res.current.uv,
+                sunrise:res.forecast.forecastday[0].astro.sunrise,
+                sunset:res.forecast.forecastday[0].astro.sunset,
+                wind_kph:res.current.wind_kph,
+                wind_dir:res.current.wind_dir,
+                vis_km:res.current.vis_km,
+    
               }
         
              })
@@ -88,7 +103,13 @@ export class WeatherHomeComponent implements OnInit{
         humidity: res.current.humidity,
         pressure: res.current.pressure_mb,
         moon: res.forecast.forecastday[0].astro.moon_phase,
-        current_temp:res.current.temp_c
+        current_temp:res.current.temp_c,
+        uv:res.current.uv,
+        sunrise:res.forecast.forecastday[0].astro.sunrise,
+        sunset:res.forecast.forecastday[0].astro.sunset,
+        wind_kph:res.current.wind_kph,
+        wind_dir:res.current.wind_dir,
+        vis_km:res.current.vis_km,
       }
 
      })
@@ -131,7 +152,12 @@ export interface Weather{
   humidity: number,
   pressure: number
   moon: string,
-  current_temp:number
-
+  current_temp:number,
+  uv: number,
+  sunrise:string,
+  sunset:string,
+  wind_kph:string,
+  wind_dir:string,
+  vis_km:string,
 }
 
