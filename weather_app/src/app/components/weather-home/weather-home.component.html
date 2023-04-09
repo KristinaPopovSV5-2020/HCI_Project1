@@ -231,7 +231,7 @@
 <br>
       
       
-    <div class="slider-container" item-display-d="5" item-display-t="4" item-display-m="2">
+    <div class="slider-container" id="hourly" item-display-d="5" item-display-t="4" item-display-m="2">
       <a (click)="previous()"><mat-icon class="arrows prev" style="margin-left: 3px; position:absolute; z-index: 1;">arrow_back_ios</mat-icon></a>
       
       <div class="slider-width">
@@ -248,5 +248,25 @@
       </div>
       <a (click)="nextt()"><mat-icon class="arrows next" style="position:absolute;right:0">arrow_forward_ios</mat-icon></a>
   </div>
+<br>
+  <div class="slider-container1" id="daily" item-display-d="5" item-display-t="4" item-display-m="2">
+    <a (click)="previous1()"><mat-icon class="arrows prev" style="margin-left: 3px; position:absolute; z-index: 1;">arrow_back_ios</mat-icon></a>
+    
+    <div class="slider-width1">
+      <div *ngFor="let slide of forecastDays">
+        <div class="item1"> 
+          <div class="col">
+            <div class="row row1">{{slide.day}}</div>
+            <div class="row row2">{{slide.date}}</div>
+          <div class="row row3"><img class="img-fluid" src="{{slide.icon}}"/></div>
+          <div class="row row4" style="font-size: medium;">{{slide.max_temp}} °C</div>
+          <div class="row row4" style="font-size: medium; color: gray;">{{slide.min_temp}} °C</div>
+        </div>
+        </div>
+      </div>
+      
+    </div>
+    <a (click)="nextt1()"><mat-icon class="arrows next" style="position:absolute;right:0">arrow_forward_ios</mat-icon></a>
+</div>
  
 </body>
