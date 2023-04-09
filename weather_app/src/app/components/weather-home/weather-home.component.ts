@@ -146,6 +146,15 @@ export class WeatherHomeComponent implements OnInit{
    
   }
 
+  openNavbar() {
+    const toggleButton = document.querySelector('.navbar-toggler')!;
+    const navbarLinks = document.querySelector('#navbarContent')!;
+
+    navbarLinks.classList.toggle('show');
+
+  }
+  
+
 
   nextt(){
     if (this.inc >= this.itemslide + this.itemleft) {
@@ -242,6 +251,7 @@ export class WeatherHomeComponent implements OnInit{
 
     if (this.currentWeather.us_epa_index === 1) {
       healthConcernElement.style.color = '#95E06C';
+      uvIndexElement.style.fontSize = '1.875rem';
       healthConcernElement.textContent = 'Good';
       aqiIndexElement.textContent = '0-50';
     } else if (this.currentWeather.us_epa_index === 2) {
