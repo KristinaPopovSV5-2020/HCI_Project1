@@ -3,7 +3,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-</head>
+  </head>
 
 <body>
       
@@ -229,100 +229,24 @@
 
 
 <br>
-
-
-    <div id="hourly" class="cardC card-2">
-        <div id="demo" class="carousel slide" data-ride="carousel">
-
-          <!-- Indicators -->
-          <ul class="carousel-indicators">
-            <li data-target="#demo" data-slide-to="0"></li>
-            <li data-target="#demo" data-slide-to="1" class="active"></li>
-            <li data-target="#demo" data-slide-to="2"></li>
-          </ul>
-        
-          <!-- The slideshow -->
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <div class="row">
-                <div class="col">
-                    <div class="row row1">12:00</div>
-                  <div class="row row2">PM</div>
-                  <div class="row row3"><img class="img-fluid" src="https://img.icons8.com/ios/100/000000/sun.png"/></div>
-                  <div class="row row4">21&deg;</div>
-                </div>
-                <div class="col">
-                    <div class="row row1">12:00</div>
-                  <div class="row row2">PM</div>
-                  <div class="row row3"><img class="img-fluid" src="https://img.icons8.com/ios/100/000000/sun.png"/></div>
-                  <div class="row row4">21&deg;</div>
-                </div>
-                <div class="col">
-                    <div class="row row1">12:00</div>
-                  <div class="row row2">PM</div>
-                  <div class="row row3"><img class="img-fluid" src="https://img.icons8.com/ios/100/000000/sun.png"/></div>
-                  <div class="row row4">21&deg;</div>
-                </div>
-                <div class="col">
-                    <div class="row row1">12:00</div>
-                  <div class="row row2">PM</div>
-                  <div class="row row3"><img class="img-fluid" src="https://img.icons8.com/ios/100/000000/sun.png"/></div>
-                  <div class="row row4">21&deg;</div>
-                </div>
-                <div class="col">
-                    <div class="row row1">12:00</div>
-                  <div class="row row2">PM</div>
-                  <div class="row row3"><img class="img-fluid" src="https://img.icons8.com/ios/100/000000/sun.png"/></div>
-                  <div class="row row4">21&deg;</div>
-                </div>
-              </div>
-               
-            </div>
+      
+      
+    <div class="slider-container" item-display-d="5" item-display-t="4" item-display-m="2">
+      <a (click)="previous()"><mat-icon class="arrows prev" style="margin-left: 3px; position:absolute; z-index: 1;">arrow_back_ios</mat-icon></a>
+      
+      <div class="slider-width">
+        <div *ngFor="let slide of hours">
+          <div class="item"> 
+            <div class="col">
+              <div class="row row1">{{slide.time}}</div>
+            <div class="row row3"><img class="img-fluid" src="{{slide.icon}}"/></div>
+            <div class="row row4">{{slide.temp_c}}&deg;</div>
           </div>
-        
+          </div>
         </div>
-        
         
       </div>
-
-
-
-  
-    <div id="daily" class="container d-flex justify-content-center">
-        <div class="row d-flex justify-content-center" style="width:92%" >
-          <div class="col-md-4 col-lg-2 m-1" *ngFor="let element of elements">
-                <div class="row">
-                    <div class="card" style="color: #4B515D; border-radius: 15px;">
-                      <div class="card-body p-4">
-                          <div class="text-center">
-                              <h3 class="fas fa-wind fa-fw">Mon</h3>
-                          </div>
-                        <div class="d-flex flex-column text-center mt-5 mb-4">
-                          <div>
-                              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-weather/ilu3.webp"
-                              width="100px">
-                            </div>
-                          <span class="small" style="color: #868B94">Sunny</span>
-                        </div>
-                        <div class="d-flex align-items-center">
-                          <div class="flex-grow-1 text-center" style="font-size: 1rem;">
-                            <div><i class="fas fa-wind fa-fw" style="color: #868B94;"></i> <span class="ms-1">
-                              <div class="d-flex">
-                                  <div class="col-md-6 d-flex justify-content-end p-1">
-                                    <p class="h5 less-bold">15°C</p>
-                                  </div>
-                                  <div class="col-md-6 d-flex justify-content-start p-1">
-                                    <p class="h5" style="color:#a3a6ad">-2°C</p>
-                                  </div>
-                                </div>
-                              </span></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-          </div>
-        </div>
-        </div>
-
+      <a (click)="nextt()"><mat-icon class="arrows next" style="position:absolute;right:0">arrow_forward_ios</mat-icon></a>
+  </div>
+ 
 </body>
