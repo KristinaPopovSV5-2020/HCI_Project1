@@ -445,6 +445,9 @@ background: linear-gradient(90deg, rgba(148,187,233,0.6) 0%, rgba(238,174,202,0.
     margin-right: 3px;
 }
 
+
+/*hourly*/
+
 .slider-container{
     position: relative;
     overflow-x: hidden;
@@ -479,6 +482,49 @@ background: linear-gradient(90deg, rgba(148,187,233,0.6) 0%, rgba(238,174,202,0.
     font-weight: 800;
 }
 
+
 .arrows{
     color:rgb(192, 191, 191)
 }
+
+/*daily*/
+
+.slider-container1{
+    position: relative;
+    overflow-x: hidden;
+    height: 220px;
+    width:70%;
+    border-radius: 10px;
+    margin: auto;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+.slider-width1{
+    position: absolute;
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    left: 0;
+    top: 0;
+    transition: 0.4s ease-in-out;
+    margin-top: 10px;
+}
+.item1{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+    width: 150px;
+    height: 200px;
+    margin: 0 10px;
+    color: #fff;
+    text-align: center;
+    font-size: 40px;
+    font-weight: 800;
+}
+
+
+
+

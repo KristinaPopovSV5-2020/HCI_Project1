@@ -1,5 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { WeatherService } from '../weather.service';
+import { MatDialog } from '@angular/material/dialog';
+import { HistoryComponent } from '../history/history.component';
 
 
 declare var google: any;
@@ -23,7 +25,7 @@ export class WeatherHomeComponent implements OnInit{
   city!: string;
 
   result:any;
-  forecastDays:Weather[]=[];
+  forecastDays:Daily[]=[];
 
   alert:boolean;
 
@@ -53,7 +55,8 @@ export class WeatherHomeComponent implements OnInit{
     
   }
 
-  constructor(weatherService:WeatherService){this.weatherService=weatherService, this.alert = false}
+  constructor(weatherService:WeatherService,
+    private dialog:MatDialog){this.weatherService=weatherService, this.alert = false}
   count = 0;
   inc = 0;
   margin = 0;
@@ -63,12 +66,21 @@ export class WeatherHomeComponent implements OnInit{
   itemleft = 0;
   itemslide = 0;
 
+  count1 = 0;
+  inc1 = 0;
+  margin1 = 0;
+  slider1!: HTMLElement;
+  itemDisplay1 = 0;
+  items1!: HTMLCollectionOf<Element>;
+  itemleft1 = 0;
+  itemslide1 = 0;
+
   hours:Hourly[]=[];
 
 
   ngOnInit() {
     this.slider = document.getElementsByClassName("slider-width")[0] as HTMLElement;
-    console.log("aaaa");
+    this.slider1 = document.getElementsByClassName("slider-width1")[0] as HTMLElement;
 
     if (screen.width > 990) {
       this.itemDisplay = Number(document.getElementsByClassName("slider-container")[0].getAttribute("item-display-d"));
@@ -96,6 +108,35 @@ export class WeatherHomeComponent implements OnInit{
       item.style.width = (screen.width*0.7 / this.itemDisplay) - this.margin + "px";
       console.log(item.style.width)
     }
+
+    //drugii
+    if (screen.width > 990) {
+      this.itemDisplay1 = Number(document.getElementsByClassName("slider-container1")[0].getAttribute("item-display-d"));
+      this.margin1 = this.itemDisplay1 * 5;
+    }
+
+    if (screen.width > 700 && screen.width < 990) {
+      this.itemDisplay1 = Number(document.getElementsByClassName("slider-container1")[0].getAttribute("item-display-t"));
+      this.margin1 = this.itemDisplay1 * 6.8;
+    }
+
+    if (screen.width > 280 && screen.width < 700) {
+      this.itemDisplay1 = Number(document.getElementsByClassName("slider-container1")[0].getAttribute("item-display-m"));
+      this.margin1 = this.itemDisplay1 * 20;
+    }
+
+    this.items1 = document.getElementsByClassName("item1");
+
+    this.itemleft1 = this.items1.length % this.itemDisplay1;
+    console.log(this.itemleft1);
+    this.itemslide1 = Math.floor(this.items1.length / this.itemDisplay1) - 1;
+
+    for (let i = 0; i < this.items1.length; i++) {
+      const item1 = this.items1[i] as HTMLElement;
+      item1.style.width = (screen.width*0.7 / this.itemDisplay1) - this.margin + "px";
+      console.log(item1.style.width)
+    }
+    
     
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -169,6 +210,19 @@ export class WeatherHomeComponent implements OnInit{
     this.slider.style.left = this.count + "px";
   }
 
+  nextt1(){
+    if (this.inc1 >= this.itemslide1 + this.itemleft1) {
+      if (this.inc1 == this.itemslide1) {
+        this.inc1 = this.inc1 + this.itemleft1;
+        this.count1 = this.count1 - (screen.width / this.itemDisplay1) * this.itemleft1;
+      } else {
+        this.inc1++;
+        this.count1 = this.count1 - screen.width;
+      }
+    }
+    this.slider1.style.left = this.count1 + "px";
+  }
+
   previous(): void {
     if (this.inc >= 0) {
       if (this.inc == this.itemleft) {
@@ -183,13 +237,25 @@ export class WeatherHomeComponent implements OnInit{
     this.slider.style.left = this.count + "px";
   }
 
+  previous1(): void {
+    if (this.inc1 >= 0) {
+      if (this.inc1 == this.itemleft1) {
+        this.inc1 = this.inc1 - this.itemleft1;
+        this.count1 = this.count1 + (screen.width / this.itemDisplay1) * this.itemleft1;
+      } else {
+        this.inc1--;
+        this.count1 = this.count1 + screen.width;
+      }
+    }
+    this.slider1.style.left = this.count1 + "px";
+  }
+
   load_hourly(){
     this.weatherService.getWeatherNextData(this.city, 0).subscribe((res) =>{
       for (let i = 0; i<24; i++){
         let time = res.forecast.forecastday[0].hour[i].time.split(" ", 2)[1];
         let hour = {time: time, temp_c:res.forecast.forecastday[0].hour[i].temp_c, icon:res.forecast.forecastday[0].hour[i].condition.icon  };
         this.hours.push(hour);
-
       }
      })
 
@@ -218,6 +284,8 @@ export class WeatherHomeComponent implements OnInit{
         us_epa_index:res.current.air_quality['us-epa-index'],
         alerts:res.alerts.alert[0]
       }
+      this.load_hourly();
+      this.load_forecast_days();
       this.adjustTextColor();
 
      
@@ -301,54 +369,49 @@ export class WeatherHomeComponent implements OnInit{
   load_forecast_days(){
     let history=this.weatherService.getWeatherData(this.city).subscribe((res)=> {
       for (let i = 0; i < res.forecast.forecastday.length; i++) {
-        let weather:Weather={
-          city: this.city,
-          image: res.forecast.forecastday[i].day.condition.icon,
-          sky: res.forecast.forecastday[i].day.condition.text,
+        if (i == res.forecast.forecastday.length-1){
+          let time = res.forecast.forecastday[i].hour[i].time.split(" ", 2)
+        let weather:Daily={
+          day: "Today",
+          date: time[0],
+          icon: res.forecast.forecastday[i].day.condition.icon,
           max_temp: res.forecast.forecastday[i].day.maxtemp_c,
           min_temp: res.forecast.forecastday[i].day.mintemp_c,
-          feels: 0,
-          humidity: 0,
-          pressure: 0,
-          moon: res.forecast.forecastday[i].astro.moon_phase,
-          current_temp: 0,
-          uv: 0,
-          sunrise: res.forecast.forecastday[i].astro.sunrise,
-          sunset: res.forecast.forecastday[i].astro.sunset,
-          wind_kph: '',
-          wind_dir: '',
-          vis_km: '',
-          us_epa_index: 0,
-          alerts: {event:"",desc:""}
+          
         }
         this.forecastDays.push(weather);
-      }
-    })
-    let next=this.weatherService.getWeatherNextData(this.city,6).subscribe((res)=> {
-      for (let i = 0; i < res.forecast.forecastday.length; i++) {
-        let weather:Weather={
-          city: this.city,
-          image: res.forecast.forecastday[i].day.condition.icon,
-          sky: res.forecast.forecastday[i].day.condition.text,
+          
+
+        }else{
+          let time = res.forecast.forecastday[i].hour[i].time.split(" ", 2)
+        let newDate = new Date(res.forecast.forecastday[i].hour[i].time);
+        let weather:Daily={
+          day: newDate.toLocaleDateString('EN-us', {weekday: 'short'}),
+          date: time[0],
+          icon: res.forecast.forecastday[i].day.condition.icon,
           max_temp: res.forecast.forecastday[i].day.maxtemp_c,
           min_temp: res.forecast.forecastday[i].day.mintemp_c,
-          feels: 0,
-          humidity: 0,
-          pressure: 0,
-          moon: res.forecast.forecastday[i].astro.moon_phase,
-          current_temp: 0,
-          uv: 0,
-          sunrise: res.forecast.forecastday[i].astro.sunrise,
-          sunset: res.forecast.forecastday[i].astro.sunset,
-          wind_kph: '',
-          wind_dir: '',
-          vis_km: '',
-          us_epa_index: 0,
-          alerts: {event:"",desc:""}
+          
         }
         this.forecastDays.push(weather);
+        }
+        
       }
-      console.log(this.forecastDays)
+      let next=this.weatherService.getWeatherNextData(this.city,7).subscribe((res)=> {
+        for (let i = 1; i < res.forecast.forecastday.length; i++) {
+          let date = res.forecast.forecastday[i].date;
+          let newDate = new Date(date);
+          let weather:Daily={
+            day: newDate.toLocaleDateString('EN-us', {weekday: 'short'}),
+            date: res.forecast.forecastday[i].date,
+            icon: res.forecast.forecastday[i].day.condition.icon,
+            max_temp: res.forecast.forecastday[i].day.maxtemp_c,
+            min_temp: res.forecast.forecastday[i].day.mintemp_c,
+          }
+          this.forecastDays.push(weather);
+        }
+        console.log(this.forecastDays)
+      })
     })
   }
   autocomplete() {
@@ -375,6 +438,36 @@ export class WeatherHomeComponent implements OnInit{
     this.predictions = [];
     this.city=this.searchInput;
     this.load_current();
+  }
+
+  onSelect(date: string){
+    this.weatherService.getWeatherHistoryData(this.city, date).subscribe((res) =>{
+      console.log(res)
+      let weather = {
+        city: this.city,
+        date: res.forecast.forecastday[0].date,
+        maxtemp_c: res.forecast.forecastday[0].day.maxtemp_c,
+        mintemp_c: res.forecast.forecastday[0].day.mintemp_c,
+        avgtemp_c: res.forecast.forecastday[0].day.avgtemp_c,
+        maxwind_mph: res.forecast.forecastday[0].day.maxwind_mph,
+        maxwind_kph: res.forecast.forecastday[0].day.maxwind_kph,
+        totalprecip_mm: res.forecast.forecastday[0].day.totalprecip_mm,
+        totalprecip_in: res.forecast.forecastday[0].day.totalprecip_in,
+        avgvis_km: res.forecast.forecastday[0].day.avgvis_km,
+        avgvis_miles: res.forecast.forecastday[0].day.avgvis_miles,
+        avghumidity: res.forecast.forecastday[0].day.avghumidity,
+        uv: res.forecast.forecastday[0].day.uv,
+        icon: res.forecast.forecastday[0].day.condition.icon,
+        text: res.forecast.forecastday[0].day.condition.text,
+        sunrise: res.forecast.forecastday[0].astro.sunrise,
+        sunset: res.forecast.forecastday[0].astro.sunset,
+        moonrise: res.forecast.forecastday[0].astro.moonrise,
+        moonset: res.forecast.forecastday[0].astro.moonset
+      }
+      const dialogRef = this.dialog.open(HistoryComponent, {
+        data:weather
+      });
+     })
   }
 }
 export interface Weather{
@@ -406,4 +499,34 @@ export interface Hourly{
   time: string,
   temp_c: number,
   icon: string
+}
+
+export interface Daily{
+  day: string,
+  date: string,
+  icon: string,
+  max_temp: string,
+  min_temp: number,
+}
+
+export interface History{
+  city: string,
+  date: string,
+  maxtemp_c: number,
+  mintemp_c: number,
+  avgtemp_c: number,
+  maxwind_mph: number,
+  maxwind_kph: number,
+  totalprecip_mm: number,
+  totalprecip_in: number,
+  avgvis_km: number,
+  avgvis_miles: number,
+  avghumidity: number,
+  uv: number,
+  icon: string,
+  text: string,
+  sunrise: string,
+  sunset: string,
+  moonrise: string,
+  moonset: string
 }
