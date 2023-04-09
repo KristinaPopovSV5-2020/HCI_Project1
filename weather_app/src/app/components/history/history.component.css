@@ -1,0 +1,8 @@
+.container {
+    background-color: white;
+    border-radius: 10px;
+    width: 500px;
+    height: fit-content;
+    margin: auto;
+    justify-content: center;
+}

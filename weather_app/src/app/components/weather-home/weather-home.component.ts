@@ -433,18 +433,15 @@ export class WeatherHomeComponent implements OnInit{
   onSelect(date: string){
     this.weatherService.getWeatherHistoryData(this.city, date).subscribe((res) =>{
       console.log(res)
-      let weather = {
+      let weather: HistoryDetails = {
         city: this.city,
         date: res.forecast.forecastday[0].date,
         maxtemp_c: res.forecast.forecastday[0].day.maxtemp_c,
         mintemp_c: res.forecast.forecastday[0].day.mintemp_c,
         avgtemp_c: res.forecast.forecastday[0].day.avgtemp_c,
-        maxwind_mph: res.forecast.forecastday[0].day.maxwind_mph,
         maxwind_kph: res.forecast.forecastday[0].day.maxwind_kph,
         totalprecip_mm: res.forecast.forecastday[0].day.totalprecip_mm,
-        totalprecip_in: res.forecast.forecastday[0].day.totalprecip_in,
         avgvis_km: res.forecast.forecastday[0].day.avgvis_km,
-        avgvis_miles: res.forecast.forecastday[0].day.avgvis_miles,
         avghumidity: res.forecast.forecastday[0].day.avghumidity,
         uv: res.forecast.forecastday[0].day.uv,
         icon: res.forecast.forecastday[0].day.condition.icon,
@@ -455,7 +452,7 @@ export class WeatherHomeComponent implements OnInit{
         moonset: res.forecast.forecastday[0].astro.moonset
       }
       const dialogRef = this.dialog.open(HistoryComponent, {
-        data:weather
+        data: weather
       });
      })
   }
@@ -499,18 +496,15 @@ export interface Daily{
   min_temp: number,
 }
 
-export interface History{
+export interface HistoryDetails{
   city: string,
   date: string,
   maxtemp_c: number,
   mintemp_c: number,
   avgtemp_c: number,
-  maxwind_mph: number,
   maxwind_kph: number,
   totalprecip_mm: number,
-  totalprecip_in: number,
   avgvis_km: number,
-  avgvis_miles: number,
   avghumidity: number,
   uv: number,
   icon: string,

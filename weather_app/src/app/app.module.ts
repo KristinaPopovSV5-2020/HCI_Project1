@@ -7,6 +7,7 @@ import { WeatherHomeComponent } from './components/weather-home/weather-home.com
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { HistoryComponent } from './components/history/history.component';
+import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,10 @@ import { HistoryComponent } from './components/history/history.component';
     NgbModule,
     HttpClientModule,
   ],
-  providers: [],
+  entryComponents: [
+    HistoryComponent
+  ],
+  providers: [{provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}],
   bootstrap: [AppComponent, WeatherHomeComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
