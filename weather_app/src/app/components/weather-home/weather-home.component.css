@@ -129,7 +129,7 @@ hr {
 
 
 .sup-celsius {
-    font-size: 38px;
+    font-size: 0.6em;
 }
 
 
@@ -244,6 +244,9 @@ background: linear-gradient(90deg, rgba(148,187,233,0.6) 0%, rgba(238,174,202,0.
 
 }
 
+.metric {
+    font-size: 0.7em !important;
+}
 
 .bold-icon {
     font-weight: bold;

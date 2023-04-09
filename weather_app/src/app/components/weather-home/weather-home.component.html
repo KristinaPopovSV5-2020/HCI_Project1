@@ -92,7 +92,7 @@
 
         <div class="container container2 d-flex justify-content-center text14" >
           
-            <div class="col-md-12 col-12">
+            <div class="col-md-12 col-12 ">
               <div class="row align-items-center">
                 <div class="col-md-2 col-2 border-0">
                   <mat-icon class="bold-icon">accessibility</mat-icon>
@@ -145,7 +145,7 @@
                 <div class="card current text-left mb-4">
                   <div class="card-body d-flex flex-column justify-content-between">
                     <h5 class="card-title">Wind Status</h5>
-                    <h2 class="weather-info-sm bold text-center my-auto">{{currentWeather.wind_kph}}<sub>km/h</sub></h2>
+                    <h2 class="weather-info-sm bold text-center my-auto">{{currentWeather.wind_kph}}<span class="metric">km/h</span></h2>
                     <div class="d-flex align-items-end">
                       <mat-icon class="small-icon">air</mat-icon>
                       <div class="text pl-2">{{currentWeather.wind_dir}}</div>
@@ -158,7 +158,7 @@
                 <div class="card current text-left mb-4">
                   <div class="card-body d-flex flex-column">
                     <h5 class="card-title text-left">Visibility</h5>
-                    <h2 class="weather-info-sm bold text-center my-auto">{{currentWeather.vis_km}}<sub>km</sub></h2>
+                    <h2 class="weather-info-sm bold text-center my-auto">{{currentWeather.vis_km}}<span class="metric">km</span></h2>
                     <div class="d-flex align-items-end"></div>
                   </div>
                 </div>
