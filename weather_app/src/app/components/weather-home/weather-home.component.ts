@@ -216,19 +216,6 @@ export class WeatherHomeComponent implements OnInit{
 
   }
   adjustTextColor() {
-    const alertWindow = document.getElementById('alertWindow');
-   
-    if (this.currentWeather.alerts.desc != undefined) {
-      this.alert = true;
-      if (alertWindow !=null) {
-        alertWindow.style.display = 'block';
-      }
-    } else {
-      this.alert = false;
-      if (alertWindow !=null) {
-        alertWindow.style.display = 'none';
-      }
-    } 
     
     const uvIndexElement = document.getElementById('uvIndex')!;
 
@@ -283,6 +270,20 @@ export class WeatherHomeComponent implements OnInit{
       healthConcernElement.textContent = 'Hazardous';
       aqiIndexElement.textContent = '301+';
     }
+
+    const alertWindow = document.getElementById('alertWindow');
+   
+    if (typeof this.currentWeather.alerts?.desc === 'undefined') {
+      this.alert = false;
+      if (alertWindow !=null) {
+        alertWindow.style.display = 'none';
+      }
+    } else {
+      this.alert = true;
+      if (alertWindow !=null) {
+        alertWindow.style.display = 'block';
+      }
+    } 
     
 
   }
