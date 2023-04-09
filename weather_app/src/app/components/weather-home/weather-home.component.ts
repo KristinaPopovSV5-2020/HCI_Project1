@@ -62,7 +62,6 @@ export class WeatherHomeComponent implements OnInit{
   margin = 0;
   slider!: HTMLElement;
   itemDisplay = 0;
-  items!: HTMLCollectionOf<Element>;
   itemleft = 0;
   itemslide = 0;
 
@@ -71,7 +70,6 @@ export class WeatherHomeComponent implements OnInit{
   margin1 = 0;
   slider1!: HTMLElement;
   itemDisplay1 = 0;
-  items1!: HTMLCollectionOf<Element>;
   itemleft1 = 0;
   itemslide1 = 0;
 
@@ -97,17 +95,7 @@ export class WeatherHomeComponent implements OnInit{
       this.margin = this.itemDisplay * 20;
     }
 
-    this.items = document.getElementsByClassName("item");
-
-    this.itemleft = this.items.length % this.itemDisplay;
-    console.log(this.itemleft);
-    this.itemslide = Math.floor(this.items.length / this.itemDisplay) - 1;
-
-    for (let i = 0; i < this.items.length; i++) {
-      const item = this.items[i] as HTMLElement;
-      item.style.width = (screen.width*0.7 / this.itemDisplay) - this.margin + "px";
-      console.log(item.style.width)
-    }
+    
 
     //drugii
     if (screen.width > 990) {
@@ -125,17 +113,7 @@ export class WeatherHomeComponent implements OnInit{
       this.margin1 = this.itemDisplay1 * 20;
     }
 
-    this.items1 = document.getElementsByClassName("item1");
-
-    this.itemleft1 = this.items1.length % this.itemDisplay1;
-    console.log(this.itemleft1);
-    this.itemslide1 = Math.floor(this.items1.length / this.itemDisplay1) - 1;
-
-    for (let i = 0; i < this.items1.length; i++) {
-      const item1 = this.items1[i] as HTMLElement;
-      item1.style.width = (screen.width*0.7 / this.itemDisplay1) - this.margin + "px";
-      console.log(item1.style.width)
-    }
+    
     
     
     if (navigator.geolocation) {
@@ -151,6 +129,7 @@ export class WeatherHomeComponent implements OnInit{
             const cityResult = data.results.find((result: { types: string | string[]; }) => result.types.includes('locality'));
             this.city = cityResult.address_components[0].long_name;
             this.weatherService.getWeatherCurrentData(this.city).subscribe((res) =>{
+              
               this.load_forecast_days();
               this.load_hourly();
               this.currentWeather = {
@@ -175,7 +154,9 @@ export class WeatherHomeComponent implements OnInit{
     
               }
               this.adjustTextColor();
+              
 
+              
         
              })
 
@@ -198,39 +179,40 @@ export class WeatherHomeComponent implements OnInit{
 
 
   nextt(){
-    if (this.inc >= this.itemslide + this.itemleft) {
-      if (this.inc == this.itemslide) {
+    if (this.inc !== this.itemslide + this.itemleft) {
+      if (this.inc === this.itemslide) {
         this.inc = this.inc + this.itemleft;
-        this.count = this.count - (screen.width / this.itemDisplay) * this.itemleft;
+        this.count = this.count - ((screen.width*0.7) / this.itemDisplay) * this.itemleft;
       } else {
         this.inc++;
-        this.count = this.count - screen.width;
+        this.count = this.count - (screen.width*0.7);
       }
     }
     this.slider.style.left = this.count + "px";
   }
 
+
   nextt1(){
-    if (this.inc1 >= this.itemslide1 + this.itemleft1) {
-      if (this.inc1 == this.itemslide1) {
+    if (this.inc1 !== this.itemslide1 + this.itemleft1) {
+      if (this.inc1 === this.itemslide1) {
         this.inc1 = this.inc1 + this.itemleft1;
-        this.count1 = this.count1 - (screen.width / this.itemDisplay1) * this.itemleft1;
+        this.count1 = this.count1 - ((screen.width*0.7) / this.itemDisplay1) * this.itemleft1;
       } else {
         this.inc1++;
-        this.count1 = this.count1 - screen.width;
+        this.count1 = this.count1 - (screen.width*0.7);
       }
     }
     this.slider1.style.left = this.count1 + "px";
   }
 
   previous(): void {
-    if (this.inc >= 0) {
+    if (this.inc !== 0) {
       if (this.inc == this.itemleft) {
         this.inc = this.inc - this.itemleft;
-        this.count = this.count + (screen.width / this.itemDisplay) * this.itemleft;
+        this.count = this.count + ((screen.width*0.7) / this.itemDisplay) * this.itemleft;
       } else {
         this.inc--;
-        this.count = this.count + screen.width;
+        this.count = this.count + (screen.width*0.7);
       }
     }
     console.log(this.inc);
@@ -238,27 +220,32 @@ export class WeatherHomeComponent implements OnInit{
   }
 
   previous1(): void {
-    if (this.inc1 >= 0) {
+    if (this.inc1 !== 0) {
       if (this.inc1 == this.itemleft1) {
         this.inc1 = this.inc1 - this.itemleft1;
-        this.count1 = this.count1 + (screen.width / this.itemDisplay1) * this.itemleft1;
+        this.count1 = this.count1 + ((screen.width*0.7) / this.itemDisplay1) * this.itemleft1;
       } else {
         this.inc1--;
-        this.count1 = this.count1 + screen.width;
+        this.count1 = this.count1 + (screen.width*0.7);
       }
     }
     this.slider1.style.left = this.count1 + "px";
   }
 
   load_hourly(){
+    this.hours=[]
     this.weatherService.getWeatherNextData(this.city, 0).subscribe((res) =>{
       for (let i = 0; i<24; i++){
         let time = res.forecast.forecastday[0].hour[i].time.split(" ", 2)[1];
         let hour = {time: time, temp_c:res.forecast.forecastday[0].hour[i].temp_c, icon:res.forecast.forecastday[0].hour[i].condition.icon  };
         this.hours.push(hour);
       }
+      this.itemleft = this.hours.length % this.itemDisplay;
+      this.itemslide = Math.floor(this.hours.length / this.itemDisplay) - 1;
+      console.log(this.itemDisplay)
+      console.log(this.itemslide)
+      console.log(this.itemleft)
      })
-
   }
 
   load_current(){
@@ -367,6 +354,7 @@ export class WeatherHomeComponent implements OnInit{
   }
 
   load_forecast_days(){
+    this.forecastDays=[];
     let history=this.weatherService.getWeatherData(this.city).subscribe((res)=> {
       for (let i = 0; i < res.forecast.forecastday.length; i++) {
         if (i == res.forecast.forecastday.length-1){
@@ -410,8 +398,10 @@ export class WeatherHomeComponent implements OnInit{
           }
           this.forecastDays.push(weather);
         }
-        console.log(this.forecastDays)
+        this.itemleft1 = this.forecastDays.length % this.itemDisplay1;
+    this.itemslide1 = Math.floor(this.forecastDays.length / this.itemDisplay1) - 1;
       })
+
     })
   }
   autocomplete() {
