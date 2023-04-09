@@ -1,5 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { WeatherService } from '../weather.service';
+import { MatDialog } from '@angular/material/dialog';
+import { HistoryComponent } from '../history/history.component';
 
 
 declare var google: any;
@@ -53,7 +55,8 @@ export class WeatherHomeComponent implements OnInit{
     
   }
 
-  constructor(weatherService:WeatherService){this.weatherService=weatherService, this.alert = false}
+  constructor(weatherService:WeatherService,
+    private dialog:MatDialog){this.weatherService=weatherService, this.alert = false}
   count = 0;
   inc = 0;
   margin = 0;
@@ -426,6 +429,36 @@ export class WeatherHomeComponent implements OnInit{
     this.city=this.searchInput;
     this.load_current();
   }
+
+  onSelect(date: string){
+    this.weatherService.getWeatherHistoryData(this.city, date).subscribe((res) =>{
+      console.log(res)
+      let weather = {
+        city: this.city,
+        date: res.forecast.forecastday[0].date,
+        maxtemp_c: res.forecast.forecastday[0].day.maxtemp_c,
+        mintemp_c: res.forecast.forecastday[0].day.mintemp_c,
+        avgtemp_c: res.forecast.forecastday[0].day.avgtemp_c,
+        maxwind_mph: res.forecast.forecastday[0].day.maxwind_mph,
+        maxwind_kph: res.forecast.forecastday[0].day.maxwind_kph,
+        totalprecip_mm: res.forecast.forecastday[0].day.totalprecip_mm,
+        totalprecip_in: res.forecast.forecastday[0].day.totalprecip_in,
+        avgvis_km: res.forecast.forecastday[0].day.avgvis_km,
+        avgvis_miles: res.forecast.forecastday[0].day.avgvis_miles,
+        avghumidity: res.forecast.forecastday[0].day.avghumidity,
+        uv: res.forecast.forecastday[0].day.uv,
+        icon: res.forecast.forecastday[0].day.condition.icon,
+        text: res.forecast.forecastday[0].day.condition.text,
+        sunrise: res.forecast.forecastday[0].astro.sunrise,
+        sunset: res.forecast.forecastday[0].astro.sunset,
+        moonrise: res.forecast.forecastday[0].astro.moonrise,
+        moonset: res.forecast.forecastday[0].astro.moonset
+      }
+      const dialogRef = this.dialog.open(HistoryComponent, {
+        data:weather
+      });
+     })
+  }
 }
 export interface Weather{
   city: string,
@@ -464,4 +497,26 @@ export interface Daily{
   icon: string,
   max_temp: string,
   min_temp: number,
+}
+
+export interface History{
+  city: string,
+  date: string,
+  maxtemp_c: number,
+  mintemp_c: number,
+  avgtemp_c: number,
+  maxwind_mph: number,
+  maxwind_kph: number,
+  totalprecip_mm: number,
+  totalprecip_in: number,
+  avgvis_km: number,
+  avgvis_miles: number,
+  avghumidity: number,
+  uv: number,
+  icon: string,
+  text: string,
+  sunrise: string,
+  sunset: string,
+  moonrise: string,
+  moonset: string
 }

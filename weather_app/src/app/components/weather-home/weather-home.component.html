@@ -253,7 +253,7 @@
     <a (click)="previous1()"><mat-icon class="arrows prev" style="margin-left: 3px; position:absolute; z-index: 1;">arrow_back_ios</mat-icon></a>
     
     <div class="slider-width1">
-      <div *ngFor="let slide of forecastDays">
+      <div *ngFor="let slide of forecastDays"> <button type="button" style="background-color: white; border: none;" (click)="onSelect(slide.date)">
         <div class="item1"> 
           <div class="col">
             <div class="row row1">{{slide.day}}</div>
@@ -263,6 +263,8 @@
           <div class="row row4" style="font-size: medium; color: gray;">{{slide.min_temp}} °C</div>
         </div>
         </div>
+      </button>
+        
       </div>
       
     </div>

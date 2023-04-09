@@ -26,11 +26,8 @@ export class WeatherService {
   }
 
 
-  getWeatherHistoryData(city: string, date: Date): Observable<any>{
-    const year = date.getFullYear()
-    const month = date.getMonth() + 1
-    const day = date.getDay()
-    return this.http.get<any>(environment.apiBaseUrl + 'history.json?key=' + environment.apiKey + '&q=' + city + '&dt='+ year + '-' + month + '-' + day);
+  getWeatherHistoryData(city: string, date: string): Observable<any>{
+    return this.http.get<any>(environment.apiBaseUrl + 'history.json?key=' + environment.apiKey + '&q=' + city + '&dt='+ date);
   }
 
   getWeatherData(city: string): Observable<any>{
