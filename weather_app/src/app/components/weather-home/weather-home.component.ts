@@ -1,8 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { WeatherService } from '../weather.service';
-import Swiper from 'swiper';
-import { Navigation, Pagination } from 'swiper';
-// import Swiper and modules styles
 
 
 declare var google: any;
@@ -27,13 +24,6 @@ export class WeatherHomeComponent implements OnInit{
 
   result:any;
   forecastDays:Weather[]=[];
-
-  // init Swiper:
-   swiper = new Swiper('.swiper', {
-    // configure Swiper to use modules
-    modules: [Navigation, Pagination],
-    // add any other configuration options here
-  });
 
   alert:boolean;
 
