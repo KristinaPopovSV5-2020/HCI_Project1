@@ -16,6 +16,7 @@ export class WeatherHomeComponent implements OnInit{
   searchInput: string = '';
   predictions: { description: string, place_id: string }[] = [];
   elements = Array.from({ length: 10 }, (_, index) => index + 1);
+  hours: Hourly[] = [];
 
   @ViewChild('myDropdownMenu', { static: false })
   dropdownMenuRef!: ElementRef;
@@ -273,9 +274,7 @@ export class WeatherHomeComponent implements OnInit{
       }
       this.load_hourly();
       this.load_forecast_days();
-      this.adjustTextColor();
-
-     
+      this.adjustTextColor();  
      })
 
   }
@@ -414,6 +413,18 @@ export class WeatherHomeComponent implements OnInit{
     })
   }
 
+  load_hourly(){
+    this.weatherService.getWeatherNextData(this.city, 0).subscribe((res) =>{
+      for (let i = 0; i<24; i++){
+        let time = res.forecast.forecastday[0].hour[i].time.split(" ", 2)[1];
+        let hour = {time: time, temp_c:res.forecast.forecastday[0].hour[i].temp_c, icon:res.forecast.forecastday[0].hour[i].condition.icon  };
+        this.hours.push(hour);
+
+      }
+     })
+
+  }
+
   autocomplete() {
     if (this.searchInput.length > 0) {
       this.dropdownMenuRef.nativeElement.classList.add('show');
@@ -500,6 +511,7 @@ export interface Hourly{
   icon: string
 }
 
+
 export interface Daily{
   day: string,
   date: string,
@@ -526,3 +538,10 @@ export interface HistoryDetails{
   moonrise: string,
   moonset: string
 }
+
+export interface Hourly{
+  time: string,
+  temp_c: number,
+  icon: string
+}
+
