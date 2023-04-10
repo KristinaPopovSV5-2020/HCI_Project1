@@ -500,6 +500,57 @@ export class WeatherHomeComponent implements OnInit{
     }
   }
 
+  getCurrentLoc() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyBYIxH4GweMZM_xgfqeRkrpO_gjJg7IUNA`;
+       
+        fetch(url)
+          .then(response => response.json())
+          .then(data => {
+            const cityResult = data.results.find((result: { types: string | string[]; }) => result.types.includes('locality'));
+            this.city = cityResult.address_components[0].long_name;
+            this.weatherService.getWeatherCurrentData(this.city).subscribe((res) =>{
+              
+              this.load_forecast_days();
+              this.load_hourly();
+              this.currentWeather = {
+                city: this.city,
+                image: res.forecast.forecastday[0].day.condition.icon,
+                sky: res.forecast.forecastday[0].day.condition.text,
+                max_temp: res.forecast.forecastday[0].day.maxtemp_c,
+                min_temp: res.forecast.forecastday[0].day.mintemp_c,
+                feels: res.current.feelslike_c,
+                humidity: res.current.humidity,
+                pressure: res.current.pressure_mb,
+                moon: res.forecast.forecastday[0].astro.moon_phase,
+                current_temp:res.current.temp_c,
+                uv:res.current.uv,
+                sunrise:res.forecast.forecastday[0].astro.sunrise,
+                sunset:res.forecast.forecastday[0].astro.sunset,
+                wind_kph:res.current.wind_kph,
+                wind_dir:res.current.wind_dir,
+                vis_km:res.current.vis_km,
+                us_epa_index:res.current.air_quality['us-epa-index'],
+                alerts:res.alerts.alert[0]
+    
+              }
+              this.adjustTextColor();
+              
+
+              
+        
+             })
+
+          })
+          .catch(error => console.error(error));
+      });
+  }
+}
+
 }
 export interface Weather{
   city: string,
