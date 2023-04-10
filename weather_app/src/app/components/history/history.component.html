@@ -15,11 +15,9 @@
                     <img src="{{weather.icon}}"
                         width="100px" class="">
                 </div>
-                <div>
-                    <h2 class="display-3"><strong>{{weather.avgtemp_c}}<sup class="sup-celsius">°C</sup></strong></h2> <!------trenutna------------>
-                </div>
             </div>
-            <p class="d-flex mb-20 justify-content-center text"><strong>{{weather.text}}</strong></p> <!---oblacnost?--------------->
+            <p class="d-flex mb-20 justify-content-center text"><strong>{{weather.text}}</strong></p> 
+            <p class="d-flex mb-20 justify-content-center text"><strong>Average temp: {{weather.avgtemp_c}} °C</strong></p> 
             
             <div class=" indian-red d-flex align-items-center justify-content-center" hidden>
                 <mat-icon class="bold-icon">north</mat-icon>
@@ -29,7 +27,9 @@
                 <div class="text"> {{weather.mintemp_c}}°C</div>  <!------min------------>
             </div>
 
-            <button type="button" class="btn btn-primary">Close</button>
+           <div class="container-button">
+             <button type="button" (click)="close()" class="btn btn-primary">Close</button>
+           </div>
           </div>
 
         <div class="col-lg-8 col-8 float-right container container2 d-flex justify-content-center text14" >

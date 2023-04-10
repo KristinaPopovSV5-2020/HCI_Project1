@@ -35,6 +35,10 @@ export class HistoryComponent implements OnInit{
     @Optional() @Inject(MAT_DIALOG_DATA) public data: HistoryDetails) {
     this.weather= data;
   }
+
+  close(){
+    this.dialogRef.close();
+  }
   
   ngOnInit(): void {
     
