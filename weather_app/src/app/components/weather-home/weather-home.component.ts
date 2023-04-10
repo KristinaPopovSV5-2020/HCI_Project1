@@ -305,7 +305,7 @@ export class WeatherHomeComponent implements OnInit{
 
     if (this.currentWeather.us_epa_index === 1) {
       healthConcernElement.style.color = '#95E06C';
-      uvIndexElement.style.fontSize = '1.875rem';
+      healthConcernElement.style.fontSize = '1.875rem';
       healthConcernElement.textContent = 'Good';
       aqiIndexElement.textContent = '0-50';
     } else if (this.currentWeather.us_epa_index === 2) {
@@ -452,31 +452,64 @@ export class WeatherHomeComponent implements OnInit{
   }
 
   onSelect(date: string){
-    this.weatherService.getWeatherHistoryData(this.city, date).subscribe((res) =>{
-      console.log(res)
-      let weather: HistoryDetails = {
-        city: this.city,
-        date: res.forecast.forecastday[0].date,
-        maxtemp_c: res.forecast.forecastday[0].day.maxtemp_c,
-        mintemp_c: res.forecast.forecastday[0].day.mintemp_c,
-        avgtemp_c: res.forecast.forecastday[0].day.avgtemp_c,
-        maxwind_kph: res.forecast.forecastday[0].day.maxwind_kph,
-        totalprecip_mm: res.forecast.forecastday[0].day.totalprecip_mm,
-        avgvis_km: res.forecast.forecastday[0].day.avgvis_km,
-        avghumidity: res.forecast.forecastday[0].day.avghumidity,
-        uv: res.forecast.forecastday[0].day.uv,
-        icon: res.forecast.forecastday[0].day.condition.icon,
-        text: res.forecast.forecastday[0].day.condition.text,
-        sunrise: res.forecast.forecastday[0].astro.sunrise,
-        sunset: res.forecast.forecastday[0].astro.sunset,
-        moonrise: res.forecast.forecastday[0].astro.moonrise,
-        moonset: res.forecast.forecastday[0].astro.moonset
-      }
-      const dialogRef = this.dialog.open(HistoryComponent, {
-        data: weather,
-        hasBackdrop: true,
-      });
-     })
+    if (new Date(date) >= new Date()){
+      this.weatherService.getWeatherNextData(this.city, 7 ).subscribe((res) =>{
+        for (let i = 1; i < res.forecast.forecastday.length; i++){
+          if (date == res.forecast.forecastday[i].date){
+            let weather: HistoryDetails = {
+              city: this.city,
+              date: res.forecast.forecastday[i].date,
+              maxtemp_c: res.forecast.forecastday[i].day.maxtemp_c,
+              mintemp_c: res.forecast.forecastday[i].day.mintemp_c,
+              avgtemp_c: res.forecast.forecastday[i].day.avgtemp_c,
+              maxwind_kph: res.forecast.forecastday[i].day.maxwind_kph,
+              totalprecip_mm: res.forecast.forecastday[i].day.totalprecip_mm,
+              avgvis_km: res.forecast.forecastday[i].day.avgvis_km,
+              avghumidity: res.forecast.forecastday[i].day.avghumidity,
+              uv: res.forecast.forecastday[i].day.uv,
+              icon: res.forecast.forecastday[i].day.condition.icon,
+              text: res.forecast.forecastday[i].day.condition.text,
+              sunrise: res.forecast.forecastday[i].astro.sunrise,
+              sunset: res.forecast.forecastday[i].astro.sunset,
+              moonrise: res.forecast.forecastday[i].astro.moonrise,
+              moonset: res.forecast.forecastday[i].astro.moonset
+            }
+            const dialogRef = this.dialog.open(HistoryComponent, {
+              data: weather,
+              hasBackdrop: true,
+            });
+
+          }
+        }
+       })
+
+    }else{
+      this.weatherService.getWeatherHistoryData(this.city, date).subscribe((res) =>{
+        console.log(res)
+        let weather: HistoryDetails = {
+          city: this.city,
+          date: res.forecast.forecastday[0].date,
+          maxtemp_c: res.forecast.forecastday[0].day.maxtemp_c,
+          mintemp_c: res.forecast.forecastday[0].day.mintemp_c,
+          avgtemp_c: res.forecast.forecastday[0].day.avgtemp_c,
+          maxwind_kph: res.forecast.forecastday[0].day.maxwind_kph,
+          totalprecip_mm: res.forecast.forecastday[0].day.totalprecip_mm,
+          avgvis_km: res.forecast.forecastday[0].day.avgvis_km,
+          avghumidity: res.forecast.forecastday[0].day.avghumidity,
+          uv: res.forecast.forecastday[0].day.uv,
+          icon: res.forecast.forecastday[0].day.condition.icon,
+          text: res.forecast.forecastday[0].day.condition.text,
+          sunrise: res.forecast.forecastday[0].astro.sunrise,
+          sunset: res.forecast.forecastday[0].astro.sunset,
+          moonrise: res.forecast.forecastday[0].astro.moonrise,
+          moonset: res.forecast.forecastday[0].astro.moonset
+        }
+        const dialogRef = this.dialog.open(HistoryComponent, {
+          data: weather,
+          hasBackdrop: true,
+        });
+       })
+    }
   }
 
 }
