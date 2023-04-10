@@ -25,6 +25,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatMenuModule} from '@angular/material/menu';
 
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -52,7 +53,7 @@ import {MatMenuModule} from '@angular/material/menu';
     FormsModule, 
     MatAutocompleteModule,
     BrowserAnimationsModule,
-    MatMenuModule
+    MatMenuModule,
   ],
   exports:[
     CommonModule,

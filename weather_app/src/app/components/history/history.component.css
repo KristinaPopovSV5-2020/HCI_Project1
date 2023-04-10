@@ -1,0 +1,41 @@
+.container {
+    border-radius: 10px;
+    justify-content: center;
+}
+
+body {
+    width: fit-content;
+    height: fit-content;
+    padding: 10px;
+}
+
+.left-div {
+    border-right: 1px solid lightgrey;
+}
+
+.ok-btn {
+    background-color: #4361ee;
+}
+
+.btn-primary {
+    transition-duration: 0.4s;
+    background-color: #4361ee;
+    color: white;
+  }
+  
+  .button:hover {
+    background-color: #3a0ca3; 
+    color: white;
+  }
+
+
+.container-button{
+    text-align: center;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+h2{
+    text-align: center;
+}
+
