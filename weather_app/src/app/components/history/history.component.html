@@ -4,10 +4,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
   </head>
+  <body>
 <div class="container">
     <div class="mt-3 centered-div current-div d-flex flex-wrap">
     
-        <div class="col-md-12 col-lg-4 col-sm-12 col-12 float-left">
+        <div class=" col-lg-4 col-4 left-div col-md-12 col-sm-12 col-12 float-left">
             <h2>Weather in {{weather.city}}</h2> <!--------grad---------->
             <div class="d-flex align-items-center justify-content-center mb-2 pb-2">
                 <div>
@@ -27,150 +28,152 @@
                 <mat-icon class="bold-icon">south</mat-icon>
                 <div class="text"> {{weather.mintemp_c}}°C</div>  <!------min------------>
             </div>
-        </div>
-    </div>
-    <br>
 
-        <div class="container container2 d-flex justify-content-center text14" >
+            <button type="button" class="btn btn-primary">Close</button>
+          </div>
+
+        <div class="col-lg-8 col-8 float-right container container2 d-flex justify-content-center text14" >
           
-            <div class="col-md-12 col-12">
-              <div class="row align-items-center">
-                <div class="col-md-2 col-2 border-0">
-                  <mat-icon class="bold-icon">accessibility</mat-icon>
+          <div class="col-md-12 col-12">
+            <div class="row align-items-center">
+              <div class="col-md-2 col-2 border-0">
+                    <mat-icon class="bold-icon">air</mat-icon>
+            </div>
+              <div class="col-md-5 col-5">
+                <span class="info"> Wind speed</span>
               </div>
+              <div class="col-md-5 col-5">
+                <div class="value"> {{weather.maxwind_kph}} km/h</div> <!--------subj---------->
+            </div>
+            </div>
+
+            <hr>
+
+              <div class="row align-items-center mt-3">
+                <div class="col-md-2 col-2">
+                  <span class="material-symbols-outlined bold-icon">
+                    rainy
+                    </span>
+                  </div>
                 <div class="col-md-5 col-5">
-                  <span class="info"> Wind speed</span>
+                    <div class="info">Total precipitation</div>  
                 </div>
                 <div class="col-md-5 col-5">
-                  <div class="value"> {{weather.maxwind_kph}} km/h</div> <!--------subj---------->
+                    <div class="value">{{weather.totalprecip_mm}} mm</div> <!-------mesec----------->
+                </div>
               </div>
+
+            <div class="row align-items-center mt-3">
+                <div class="col-md-2 col-2">
+                  <span class="bold-icon material-symbols-outlined">
+                    visibility
+                    </span>
+                  </div>
+                <div class="col-md-5 col-5">
+                    <div class="info"> Average visibility</div>
+                </div>
+                <div class="col-md-5 col-5">
+                    <div class="value"> {{weather.avgvis_km}} km</div> <!-------pritisak----------->
+                </div>
               </div>
 
               <hr>
-                <div class="row align-items-center mt-3">
-                  <div class="col-md-2 col-2">
-                    <span class="material-symbols-outlined bold-icon">
-                      humidity_mid
-                      </span>
-                    </div>
-                  <div class="col-md-5 col-5">
-                      <div class="info">Total precipitation</div>  
-                  </div>
-                  <div class="col-md-5 col-5">
-                      <div class="value">{{weather.totalprecip_mm}} mm</div> <!-------mesec----------->
-                  </div>
-                </div>
 
-                <hr>
+              <div class="row align-items-center mt-3">
+                <div class="col-md-2 col-2">
+                  <span class="material-symbols-outlined bold-icon">
+                    humidity_mid
+                    </span>
+                  </div>
+                <div class="col-md-5 col-5">
+                    <div class="info"> Humidity</div>  
+                </div>
+                <div class="col-md-5 col-5">
+                    <div class="value">{{weather.avghumidity}}%</div> <!-------mesec----------->
+                </div>
+              </div>
+
+              <div class="row align-items-center mt-3">
+                <div class="col-md-2 col-2">
+                  <span class="material-symbols-outlined bold-icon">
+                    sunny
+                    </span>
+                  </div>
+                <div class="col-md-5 col-5">
+                    <div class="info"> UV</div>  
+                </div>
+                <div class="col-md-5 col-5">
+                    <div class="value">{{weather.uv}}</div>
+                </div>
+              </div>
+
+              <hr>
+
               <div class="row align-items-center mt-3">
                   <div class="col-md-2 col-2">
-                    <span class="bold-icon material-symbols-outlined">
-                        compress
-                        </span>
-                    </div>
-                  <div class="col-md-5 col-5">
-                      <div class="info"> Average visibility</div>
-                  </div>
-                  <div class="col-md-5 col-5">
-                      <div class="value"> {{weather.avgvis_km}} km</div> <!-------pritisak----------->
-                  </div>
-                </div>
-                <hr>
-                <div class="row align-items-center mt-3">
-                  <div class="col-md-2 col-2">
                     <span class="material-symbols-outlined bold-icon">
-                      humidity_mid
+                      arrow_circle_up
                       </span>
                     </div>
                   <div class="col-md-5 col-5">
-                      <div class="info"> Humidity</div>  
+                      <div class="info"> Sunrise</div>  
                   </div>
                   <div class="col-md-5 col-5">
-                      <div class="value">{{weather.avghumidity}}%</div> <!-------mesec----------->
+                      <div class="value">{{weather.sunrise}}</div> 
                   </div>
                 </div>
 
-                <hr>
                 <div class="row align-items-center mt-3">
                   <div class="col-md-2 col-2">
                     <span class="material-symbols-outlined bold-icon">
-                      humidity_mid
+                      arrow_circle_down
                       </span>
                     </div>
                   <div class="col-md-5 col-5">
-                      <div class="info"> UV</div>  
+                      <div class="info"> Sunset</div>  
                   </div>
                   <div class="col-md-5 col-5">
-                      <div class="value">{{weather.uv}}</div> <!-------mesec----------->
+                      <div class="value">{{weather.sunset}}</div>
                   </div>
                 </div>
 
                 <hr>
 
                 <div class="row align-items-center mt-3">
-                    <div class="col-md-2 col-2">
-                      <span class="material-symbols-outlined bold-icon">
-                        humidity_mid
-                        </span>
-                      </div>
-                    <div class="col-md-5 col-5">
-                        <div class="info"> Sunrise</div>  
+                  <div class="col-md-2 col-2">
+                    <span class="material-symbols-outlined bold-icon">
+                      arrow_circle_up
+                      </span>
                     </div>
-                    <div class="col-md-5 col-5">
-                        <div class="value">{{weather.sunrise}}</div> <!-------mesec----------->
-                    </div>
+                  <div class="col-md-5 col-5">
+                      <div class="info"> Moonrise</div>  
                   </div>
-  
-                  <hr>
+                  <div class="col-md-5 col-5">
+                      <div class="value">{{weather.moonrise}}</div> <!-------mesec----------->
+                  </div>
+                </div>
 
-                  <div class="row align-items-center mt-3">
-                    <div class="col-md-2 col-2">
-                      <span class="material-symbols-outlined bold-icon">
-                        humidity_mid
-                        </span>
-                      </div>
-                    <div class="col-md-5 col-5">
-                        <div class="info"> Sunset</div>  
+                <div class="row align-items-center mt-3">
+                  <div class="col-md-2 col-2">
+                    <span class="material-symbols-outlined bold-icon">
+                      arrow_circle_down
+                      </span>
                     </div>
-                    <div class="col-md-5 col-5">
-                        <div class="value">{{weather.sunset}}</div> <!-------mesec----------->
-                    </div>
+                  <div class="col-md-5 col-5">
+                      <div class="info"> Moonset</div>  
                   </div>
-  
-                  <hr>
-                  <div class="row align-items-center mt-3">
-                    <div class="col-md-2 col-2">
-                      <span class="material-symbols-outlined bold-icon">
-                        humidity_mid
-                        </span>
-                      </div>
-                    <div class="col-md-5 col-5">
-                        <div class="info"> Moonrise</div>  
-                    </div>
-                    <div class="col-md-5 col-5">
-                        <div class="value">{{weather.moonrise}}</div> <!-------mesec----------->
-                    </div>
+                  <div class="col-md-5 col-5">
+                      <div class="value">{{weather.moonset}}</div> <!-------mesec----------->
                   </div>
-  
-                  <hr>
-
-                  <div class="row align-items-center mt-3">
-                    <div class="col-md-2 col-2">
-                      <span class="material-symbols-outlined bold-icon">
-                        humidity_mid
-                        </span>
-                      </div>
-                    <div class="col-md-5 col-5">
-                        <div class="info"> Moonset</div>  
-                    </div>
-                    <div class="col-md-5 col-5">
-                        <div class="value">{{weather.moonset}}</div> <!-------mesec----------->
-                    </div>
-                  </div>
-  
-                  <hr>
+                </div>
                 
-          </div>
-
+                <hr>
+                
         </div>
+
+      </div>
+  </div>
     </div>
+    <br>
+
+  </body> 

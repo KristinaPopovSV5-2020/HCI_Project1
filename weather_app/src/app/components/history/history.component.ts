@@ -34,11 +34,12 @@ export class HistoryComponent implements OnInit{
   constructor(private weatherService:WeatherService,public dialogRef: MatDialogRef<HistoryComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: HistoryDetails) {
     this.weather= data;
-
   }
   
   ngOnInit(): void {
     
   }
+
+  
 
 }

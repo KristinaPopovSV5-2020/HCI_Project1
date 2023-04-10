@@ -336,6 +336,12 @@ export class WeatherHomeComponent implements OnInit{
       aqiIndexElement.textContent = '301+';
     }
 
+    this.checkForAlerts();
+    
+
+  }
+
+  checkForAlerts() {
     const alertWindow = document.getElementById('alertWindow');
    
     if (typeof this.currentWeather.alerts?.desc === 'undefined') {
@@ -349,8 +355,11 @@ export class WeatherHomeComponent implements OnInit{
         alertWindow.style.display = 'block';
       }
     } 
-    
+  }
 
+  scrollToDaily() {
+    const dailyForecast = document.getElementById('daily')!;
+    dailyForecast.scrollIntoView({ behavior: 'smooth' });
   }
 
   load_forecast_days(){
@@ -404,6 +413,7 @@ export class WeatherHomeComponent implements OnInit{
 
     })
   }
+
   autocomplete() {
     if (this.searchInput.length > 0) {
       this.dropdownMenuRef.nativeElement.classList.add('show');
@@ -452,10 +462,12 @@ export class WeatherHomeComponent implements OnInit{
         moonset: res.forecast.forecastday[0].astro.moonset
       }
       const dialogRef = this.dialog.open(HistoryComponent, {
-        data: weather
+        data: weather,
+        hasBackdrop: true,
       });
      })
   }
+
 }
 export interface Weather{
   city: string,

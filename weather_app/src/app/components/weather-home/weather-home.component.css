@@ -27,6 +27,10 @@
     color: #DB5461;
 }
 
+a:hover {
+    cursor: pointer;
+}
+
 
 /* color: rgb(207, 213, 237);
  */
@@ -125,8 +129,6 @@ hr {
     border: none;
     border-top: 1px solid gray;
 }
-
-
 
 .sup-celsius {
     font-size: 0.6em;
@@ -524,6 +526,10 @@ background: linear-gradient(90deg, rgba(148,187,233,0.6) 0%, rgba(238,174,202,0.
     font-weight: 800;
 }
 
+::-webkit-scrollbar {
+    width: 0;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
 
 
 
